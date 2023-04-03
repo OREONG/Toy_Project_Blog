@@ -6,7 +6,9 @@
     <select id="boardList" parameterType="com.comverse.blog.dto.Board" resultType="com.comverse.blog.dto.Board">
         SELECT  *
         FROM    (
-                SELECT  a.*, ROW_NUMBER() OVER (
+                SELECT  a.*,
+                        (select count(*) from board where board_parent = a. board_no and board_del = 'N') as review_count,
+                        ROW_NUMBER() OVER (
 
                     # 정렬 옵션
                     <if test="order == 'latest' or order == null">
@@ -16,7 +18,7 @@
                         order by board_reg asc
                     </if>
                     <if test="order == 'manyRev'">
-                        order by
+                        order by review_count desc
                     </if>
                     <if test="order == 'mostView'">
                         order by board_count desc

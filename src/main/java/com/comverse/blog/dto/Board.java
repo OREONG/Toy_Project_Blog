@@ -26,4 +26,7 @@ public class Board {
 
     // 정렬용
     private String order;
+
+    // 리뷰 갯수
+    private int review_count;
 }

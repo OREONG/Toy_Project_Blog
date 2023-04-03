@@ -58,6 +58,7 @@ public class BoardController {
 
             board.setOrder(order);
             List<Board> boardList = bs.boardList(board);
+            System.out.println(boardList);
 
             model.addAttribute("boardList", boardList);
             model.addAttribute("pb", pb);

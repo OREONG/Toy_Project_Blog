@@ -40,21 +40,17 @@
         </div>
 
         <!-- 메인 이미지-->
-        <header class="py-5 bg-light border-bottom mb-4">
+
             <div class="container">
-                <div class="text-center my-5">
-                    <h1 class="fw-bolder">Welcome to Blog Home!</h1>
-                    <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
-                </div>
+                <img class="main-img" src="images/main_img.png">
             </div>
-        </header>
 
         <!-- 게시물 리스트 start-->
         <div class="container">
             <div class="orderList">
-                <a href="/?order=latest">최신순</a>
-                <a href="/?order=oldest">오래된순</a>
-                <a href="/?order=manyRev">댓글많은순</a>
+                <a href="/?order=latest">최신순</a>&nbsp;|
+                <a href="/?order=oldest">오래된순</a>&nbsp;|
+                <a href="/?order=manyRev">댓글많은순</a>&nbsp;|
                 <a href="/?order=mostView">조회순</a>
             </div>
                     <!-- 최근 게시물 리스트-->
@@ -63,11 +59,18 @@
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <a class="card-body" th:href="@{/post(board_no=${item.board_no})}">
-                                    <p class="card-text" th:text="${item.member_id}"></p>
-                                    <h2 class="card-title h4" th:text="${item.board_title}"></h2>
-                                    <div class="small text-muted" th:text="${#dates.format(item.board_reg, 'yyyy-MM-dd HH:mm:ss')}"></div>
-                                    <div class="small text-muted">
-                                        조회수:<span  th:text="${item.board_count}"></span>
+                                    <div>
+                                        <p class="card-text" th:text="${item.member_id}"></p>
+                                        <h2 class="card-title h4" th:text="${item.board_title}"></h2>
+                                        <div class="small text-muted" th:text="${#dates.format(item.board_reg, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-muted">
+                                            조회수:<span  th:text="${item.board_count}"></span>
+                                        </div>
+                                        <div class="small text-muted">
+                                            리뷰 갯수:<span  th:text="${item.review_count}"></span>
+                                        </div>
                                     </div>
                                 </a>
                             </div>
@@ -124,8 +127,6 @@
             <!-- 검색-->
             <div class="card mb-4">
                 <form action="/">
-                    <div class="card-header">Search</div>
-                    <div class="card-body">
                         <div class="input-group">
                             <select name="searchOpn">
                                 <option value="title">제목</option>
@@ -136,8 +137,7 @@
                             <input class="form-control" name="keyword" type="text" placeholder="검색어를 입력하세요" aria-describedby="button-search" />
                             <button class="btn btn-primary" id="button-search" type="submit">검색</button>
                         </div>
-                    </div>
-                </form>
+                   </form>
             </div>
 
         </div>
