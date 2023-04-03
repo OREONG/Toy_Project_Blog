@@ -76,6 +76,12 @@
   }
 }
 
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
 .de-btn {
   border: none;
   background-color: aliceblue;

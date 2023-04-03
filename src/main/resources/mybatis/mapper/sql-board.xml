@@ -7,7 +7,7 @@
         SELECT  *
         FROM    (
                 SELECT  a.*,
-                        (select count(*) from board where board_parent = a. board_no and board_del = 'N') as review_count,
+                        (select count(*) from board where board_parent = a.board_no and board_del = 'N') as review_count,
                         ROW_NUMBER() OVER (
 
                     # 정렬 옵션
@@ -49,7 +49,8 @@
     </select>
 
     <select id="selectPost" parameterType="integer" resultType="com.comverse.blog.dto.Board">
-        select  *
+        select  *,
+                (select count(*) from board where board_parent = #{board_no} and board_del = 'N') as review_count
         from    board
         where   board_no = #{board_no}
     </select>
