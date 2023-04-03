@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:if="${result > 0}">
+    <script type="text/javascript">
+        alert("게시글이 수정되었습니다");
+        location.href="/";
+    </script>
+</th:block>
+<th:block th:if="${result <= 0}">
+    <script type="text/javascript">
+        alert("다시 시도해 주세요");
+        history.back();
+    </script>
+</th:block>
+</body>
+</html>

@@ -4,5 +4,7 @@
 <configuration>
     <mappers>
         <mapper resource="/mybatis/mapper/sql-test.xml"/>
+        <mapper resource="/mybatis/mapper/sql-board.xml"/>
+        <mapper resource="/mybatis/mapper/sql-member.xml"/>
     </mappers>
 </configuration>

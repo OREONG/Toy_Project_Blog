@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.comverse.blog.mapper.BoardMapper">
+
+    <select id="boardList" parameterType="com.comverse.blog.dto.Board" resultType="com.comverse.blog.dto.Board">
+        SELECT  *
+        FROM    (
+                SELECT  a.*, ROW_NUMBER() OVER (
+
+                    # 정렬 옵션
+                    <if test="order == 'latest' or order == null">
+                        order by board_reg desc
+                    </if>
+                    <if test="order == 'oldest'">
+                        order by board_reg asc
+                    </if>
+                    <if test="order == 'manyRev'">
+                        order by
+                    </if>
+                    <if test="order == 'mostView'">
+                        order by board_count desc
+                    </if>
+
+                    ) AS rn
+                FROM    board a
+                WHERE   board_parent is null
+                and     board_del = 'N'
+                # 검색 옵션
+                <if test="searchOpn == 'title'">
+                    and  board_title like CONCAT('%', #{keyword}, '%')
+                </if>
+                <if test="searchOpn == 'content'">
+                    and board_content like CONCAT('%', #{keyword}, '%')
+                </if>
+                <if test="searchOpn == 'titleContent'">
+                    and board_title like CONCAT('%', #{keyword}, '%')
+                    or board_content like CONCAT('%', #{keyword}, '%')
+                </if>
+                <if test="searchOpn == 'writer'">
+                    and  a.member_id like CONCAT('%', #{keyword}, '%')
+                </if>
+                ) b
+        WHERE rn BETWEEN #{startRow} AND #{endRow}
+        AND board_del = 'N'
+        AND board_parent is null
+    </select>
+
+    <select id="selectPost" parameterType="integer" resultType="com.comverse.blog.dto.Board">
+        select  *
+        from    board
+        where   board_no = #{board_no}
+    </select>
+
+    <select id="reviewList" parameterType="integer" resultType="com.comverse.blog.dto.Board">
+        select  *
+        from    board
+        where   board_del = 'N'
+        order by board_reg desc
+    </select>
+
+    <select id="getTotal" parameterType="com.comverse.blog.dto.Board" resultType="integer">
+        select  count(*)
+        from    board a
+        where   board_del = 'N'
+        and     board_parent is null
+        <if test="searchOpn == 'title'">
+            and  board_title like CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="searchOpn == 'content'">
+            and board_content like CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="searchOpn == 'title+content'">
+            and board_title like CONCAT('%', #{keyword}, '%')
+            or board_content like CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="searchOpn == 'writer'">
+            and  a.member_id like CONCAT('%', #{keyword}, '%')
+        </if>
+    </select>
+
+    <insert id="reviewInsert" parameterType="com.comverse.blog.dto.Board">
+        insert into board
+        values      (null, #{board_parent}, #{member_id}, null, #{board_content}, null, sysdate(), 'N')
+    </insert>
+
+    <insert id="re_reviewInsert" parameterType="com.comverse.blog.dto.Board">
+        insert into board
+        values      (null, #{board_parent}, #{member_id}, null, #{board_content}, null, sysdate(), 'N')
+    </insert>
+
+    <insert id="postInsert" parameterType="com.comverse.blog.dto.Board">
+        insert into board
+        values      (null, null, #{member_id}, #{board_title}, #{board_content}, 0, sysdate(), 'N')
+    </insert>
+
+    <update id="postDelete" parameterType="integer">
+        update  board
+        set     board_del = 'Y'
+        where   board_no = #{boardNo}
+    </update>
+
+    <update id="postUpdate" parameterType="com.comverse.blog.dto.Board">
+        update  board
+        set     board_title = #{board_title}, board_content = #{board_content}
+        where   board_no = #{board_no}
+    </update>
+
+    <update id="updateCount" parameterType="integer">
+        update  board
+        set     board_count = board_count + 1
+        where   board_no = #{board_no}
+    </update>
+
+</mapper>

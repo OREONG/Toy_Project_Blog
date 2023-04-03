@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Blog Home - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/join.css" rel="stylesheet" />
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>function validateForm() {
+    var password = document.getElementById('password').value;
+    var confirmPassword = document.getElementById("confirmPassword").value;
+    if (password != confirmPassword) {
+        alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+$(document).ready(function (){
+    $("#duplCheck").click(function(){
+        $("#signup").attr("type", "button");
+        const id = $("#user_id").val();
+        $.ajax({
+            type: "get",
+            async: false,
+            url: "/duplCheck",
+            data: {member_id: id},
+            success: function (data) {
+                console.log(data)
+                if(data >= 1) {
+                    $("#idChk-msg").text("이미 사용중인 ID 입니다.");
+                    $("#idChk-msg").addClass("failMsg");
+                    $("#idChk-msg").removeClass("successMsg");
+                    $("#msg-box").addClass("msg-box");
+                }else {
+                    $("#idChk-msg").text("사용 가능한 ID 입니다.");
+                    $("#idChk-msg").addClass("successMsg");
+                    $("#idChk-msg").removeClass("failMsg");
+                    $("#msg-box").addClass("msg-box");
+                    $("#signup").attr("type", "submit");
+                }
+            }
+        })
+    });
+})
+
+
+</script>
+</head>
+
+<body>
+
+<!-- header-->
+<div class="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#!">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <th:block th:if="${member_id == null}">
+                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/loginForm">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/joinForm">Join</a></li>
+                    </th:block>
+                    <th:block th:if="${member_id != null}">
+                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/postInsert">New Post</a></li>
+                    </th:block>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+
+<div class="join-box">
+    <div class="main">
+        <form name="join" method="post" action="/join" autocomplete="off" encType="utf-8" onsubmit="return validateForm()">
+            <h1 class="logo">회원가입</h1>
+            <div class="joinContainer">
+
+                <div class="id-box">
+                    <input type="text" placeholder="아이디" id="user_id" name="member_id" class="account" required>
+                    <button type="button" id="duplCheck">중복확인</button>
+                </div>
+                <div id="msg-box"><span id="idChk-msg"></span></div>
+
+                <input type="password" placeholder="비밀번호(영문자/숫자/특수문자 포함 8자 이상)" id="password" class="account" name="password"
+                       pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+])(?=.*[a-zA-Z0-9!@#$%^&*()_+]).{8,}$" required>
+                <input type="password" placeholder="비밀번호 확인" id="confirmPassword" class="account" name="confirmPassword" required>
+                <input type="text" placeholder="이름" id="name" class="account" name="name" required>
+                <input type="email" placeholder="이메일" id="email" class="account" name="email" required>
+                <div class="btn-box">
+                    <button type="button" id="signup" class="btn" value="회원가입">회원가입</button>
+                </div>
+                <p id="alert" class="account"> </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<!-- Footer-->
+<div style="position: fixed; bottom: 0; width: 100%;">
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+    </footer>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/main.js"></script>
+</body>
+</html>

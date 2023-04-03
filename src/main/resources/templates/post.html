@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -10,133 +10,251 @@
         <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/post.css" rel="stylesheet" />
+        <script src="js/jquery-3.6.4.min.js"></script>
     </head>
     <body>
-        <!-- Responsive navbar-->
+    <!-- header-->
+    <div class="header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="#!">Start Bootstrap</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
+                        <th:block th:if="${member_id == null}">
+                            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/loginForm">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/joinForm">Join</a></li>
+                        </th:block>
+                        <th:block th:if="${member_id != null}">
+                            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/postInsert">New Post</a></li>
+                        </th:block>
+
                     </ul>
                 </div>
             </div>
         </nav>
+    </div>
+
+
         <!-- Page content-->
         <div class="container mt-5">
-            <div class="row">
+            <div class="container">
                 <div class="col-lg-8">
                     <!-- Post content-->
                     <article>
                         <!-- Post header-->
                         <header class="mb-4">
                             <!-- Post title-->
-                            <h1 class="fw-bolder mb-1">Welcome to Blog Post!</h1>
+                            <h1 class="fw-bolder mb-1" th:text="${board.board_title}"></h1>
                             <!-- Post meta content-->
-                            <div class="text-muted fst-italic mb-2">Posted on January 1, 2022 by Start Bootstrap</div>
-                            <!-- Post categories-->
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                            <div class="text-muted fst-italic mb-2" th:text="${board.board_reg}"></div>
+                            <th:block th:if="${member_id == board.member_id}">
+                                <div class="btn-group">
+                                    <div>
+                                        <form action="/postDelete">
+                                            <input type="hidden" name="board_no" th:value="${board.board_no}">
+                                            <button class="btn btn-outline-dark" type="submit">삭제</button>
+                                        </form>
+                                    </div>
+                                    <div>
+                                        <form action="/postUpdateForm">
+                                            <input type="hidden" name="board_no" th:value="${board.board_no}">
+                                            <input type="hidden" name="member_id" th:value="${board.member_id}">
+                                            <input type="hidden" name="board_title" th:value="${board.board_title}">
+                                            <input type="hidden" name="board_content" th:value="${board.board_content}">
+                                            <button class="btn btn-outline-dark" type="submit">수정</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </th:block>
                         </header>
-                        <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
-                        <!-- Post content-->
-                        <section class="mb-5">
-                            <p class="fs-5 mb-4">Science is an enterprise that should be cherished as an activity of the free human mind. Because it transforms who we are, how we live, and it gives us an understanding of our place in the universe.</p>
-                            <p class="fs-5 mb-4">The universe is large and old, and the ingredients for life as we know it are everywhere, so there's no reason to think that Earth would be unique in that regard. Whether of not the life became intelligent is a different question, and we'll see if we find that.</p>
-                            <p class="fs-5 mb-4">If you get asteroids about a kilometer in size, those are large enough and carry enough energy into our system to disrupt transportation, communication, the food chains, and that can be a really bad day on Earth.</p>
-                            <h2 class="fw-bolder mb-4 mt-5">I have odd cosmic thoughts every day</h2>
-                            <p class="fs-5 mb-4">For me, the most fascinating interface is Twitter. I have odd cosmic thoughts every day and I realized I could hold them to myself or share them with people who might be interested.</p>
-                            <p class="fs-5 mb-4">Venus has a runaway greenhouse effect. I kind of want to know what happened there because we're twirling knobs here on Earth without knowing the consequences of it. Mars once had running water. It's bone dry today. Something bad happened there as well.</p>
-                        </section>
+                       <!-- Post content-->
+                        <div class="card bg-light">
+                        <section class="mb-5" th:text="${board.board_content}"></section>
+                            <div th:text="${board.member_id}"></div>
+                            <div th:text="${board.board_count}"></div>
+                        </div>
                     </article>
-                    <!-- Comments section-->
+
+                    <!-- 댓글 start-->
                     <section class="mb-5">
                         <div class="card bg-light">
                             <div class="card-body">
-                                <!-- Comment form-->
-                                <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
-                                <!-- Comment with nested comments-->
-                                <div class="d-flex mb-4">
-                                    <!-- Parent comment-->
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
-                                        <!-- Child comment 1-->
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold">Commenter Name</div>
-                                                And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
-                                            </div>
-                                        </div>
-                                        <!-- Child comment 2-->
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold">Commenter Name</div>
-                                                When you put money directly to a problem, it makes a good headline.
-                                            </div>
+
+                                <!-- 댓글 등록-->
+                                <div>
+                                <th:block th:if="${member_id != null}">
+                                    <form class="mb-4" action="/reviewInsert">
+                                        <textarea class="form-control" rows="3" placeholder="댓글을 입력하세요" name="board_content" required></textarea>
+                                        <input type="hidden" name="parent_board_no" th:value="${board.board_no}">
+                                        <button type="submit" class="reg-btn">등록</button>
+                                    </form>
+                                </th:block>
+                                <th:block th:if="${member_id == null}">
+                                    <form class="mb-4">
+                                        <textarea class="form-control" rows="3" placeholder="로그인 하시면 댓글을 작성하실 수 있습니다."></textarea>
+                                    </form>
+                                </th:block>
+                                </div>
+                                <th:block th:if="${result > 0}">
+                                    <script type="text/javascript">
+                                        window.history.back();
+                                    </script>
+                                </th:block>
+
+                                <!-- 댓글 리스트-->
+                                <th:block th:each="review : ${reviewList}">
+                                    <th:block th:if="${review.board_parent} == ${board.board_no}">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                        <div class="ms-3">
+                                            <div class="fw-bold" th:text="${review.member_id}"></div>
+                                            <div th:text="${review.board_content}"></div>
+                                            <div th:text="${#dates.format(review.board_reg, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                                            <th:block th:if="${member_id != null}">
+                                            <button class="re-btn" onclick="toggleWriteForm(event)">답글 달기</button>
+                                            </th:block>
+                                            <th:block th:if="${member_id == review.member_id}">
+                                            <button class="up-btn" onclick="toggleUpdateForm(event)">수정</button>
+                                            <button class="de-btn" th:board_no="${review.board_no}" th:onclick="reviewDelete(this.getAttribute('board_no'))">삭제</button>
+                                            </th:block>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- Single comment-->
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
+                                    <!--대댓글 등록-->
+                                    <div class="writeForm" style="display: none">
+                                        <form class="mb-4" action="/re_reviewInsert">
+                                            <textarea class="form-control" rows="1" placeholder="대댓글을 입력하세요" name="board_content"></textarea>
+                                            <input type="hidden" name="parent_review_no" th:value="${review.board_no}">
+                                            <button type="submit" class="re-reg-btn">등록</button>
+                                            <button type="button" class="re-btn" onclick="cancelWrite(event)">취소</button>
+                                        </form>
                                     </div>
-                                </div>
+
+                                    <!--댓글 수정-->
+                                    <div class="updateForm" style="display: none">
+                                        <form class="mb-4" action="/reviewUpdate">
+                                            <textarea class="form-control" rows="1" th:placeholder="${review.board_content}" name="board_content"></textarea>
+                                            <input type="hidden" name="board_no" th:value="${review.board_no}">
+                                            <input type="hidden" name="member_id" th:value="${review.member_id}">
+                                            <button type="submit" class="re-reg-btn">수정</button>
+                                            <button type="button" class="re-btn" onclick="cancelUpdate(event)">취소</button>
+                                        </form>
+                                    </div>
+                                    <!--대댓글 리스트-->
+                                    <div class="ms-5" th:each="re_review : ${reviewList}">
+                                        <th:block th:if="${re_review.board_parent} == ${review.board_no}">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                            <div class="ms-3">
+                                                <div class="fw-bold" th:text="${re_review.member_id}"></div>
+                                                <div th:text="${re_review.board_content}"></div>
+                                                <div th:text="${#dates.format(re_review.board_reg, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                                                <th:block th:if="${member_id == re_review.member_id}">
+                                                <button class="up-btn" onclick="reToggleUpdateForm(event)">수정</button>
+                                                <button class="de-btn" th:board_no="${re_review.board_no}" th:onclick="reviewDelete(this.getAttribute('board_no'))">삭제</button>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                            <!--대댓글 수정-->
+                                            <div class="reUpdateForm" style="display: none">
+                                                <form class="mb-4" action="/reviewUpdate">
+                                                    <textarea class="form-control" rows="1" th:placeholder="${re_review.board_content}" name="board_content"></textarea>
+                                                    <input type="hidden" name="board_no" th:value="${re_review.board_no}">
+                                                    <input type="hidden" name="member_id" th:value="${re_review.member_id}">
+                                                    <button type="submit" class="re-reg-btn">수정</button>
+                                                    <button type="button" class="re-btn" onclick="reCancelUpdate(event)">취소</button>
+                                                </form>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                    </th:block>
+                                </th:block>
                             </div>
                         </div>
                     </section>
-                </div>
-                <!-- Side widgets-->
-                <div class="col-lg-4">
-                    <!-- Search widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Search</div>
-                        <div class="card-body">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+
+                    <script type="text/javascript">
+
+                        // 답글쓰기 폼 토글
+                        function toggleWriteForm(event) {
+                            var writeForm = event.target.closest(".d-flex").nextElementSibling;
+                            writeForm.style.display = writeForm.style.display === "none" ? "block" : "none";
+                        }
+                        function cancelWrite(event) {
+                            var writeForm = event.target.closest(".reply-form");
+                            writeForm.style.display = "none";
+                        }
+
+                        // 댓글 수정 폼 토글
+                        function toggleUpdateForm(event) {
+                            var updateForm = event.target.closest(".d-flex").nextElementSibling;
+                            updateForm = updateForm.classList.contains("writeForm") ? updateForm.nextElementSibling : updateForm;
+                            updateForm.style.display = updateForm.style.display === "none" ? "block" : "none";
+                        }
+                        function cancelUpdate(event) {
+                            var updateForm = event.target.closest(".updateForm");
+                            updateForm.style.display = "none";
+                        }
+
+                        // 대댓글 수정 폼 토글
+                        function reToggleUpdateForm(event) {
+                            console.log(1)
+                            var reUpdateForm = event.target.closest(".d-flex").nextElementSibling;
+                            while (reUpdateForm) {
+                                if (reUpdateForm.classList.contains("reUpdateForm")) {
+                                    break;
+                                }
+                                reUpdateForm = reUpdateForm.nextElementSibling;
+                            }
+                            if (reUpdateForm) {
+                                reUpdateForm.style.display = reUpdateForm.style.display === "none" ? "block" : "none";
+                            }
+                        }
+                        function reCancelUpdate(event) {
+                            var reUpdateForm = event.target.closest(".reUpdateForm");
+                            reUpdateForm.style.display = "none";
+                        }
+
+                        // 댓글 삭제
+                        function reviewDelete(board_no) {
+                            console.log(board_no)
+                            $.ajax({
+                               type: "POST",
+                               url: "/reviewDelete/" + board_no,
+                               success: function (response) {
+                                   console.log("성공");
+                                   location.reload();
+                               } ,
+                                error: function(xhr, status, error) {
+                                    console.error(xhr.responseText);
+                                }
+                            });
+                        }
+
+                        // 댓글 등록 시 새로고침
+                        const regBtn = document.querySelector('.reg-btn');
+                        regBtn.addEventListener('click', function(event) {
+                            setTimeout(function() {
+                                location.reload();
+                            }, 100); // 0.1초 후에 페이지 새로고침
+                        });
+                        // 대댓글 등록 시 새로고침
+                        const reRegBtns = document.querySelectorAll('.re-reg-btn');
+                        reRegBtns.forEach(function(reRegBtn) {
+                            reRegBtn.addEventListener('click', function(event) {
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 100); // 0.1초 후에 페이지 새로고침
+                            });
+                        });
+
+                    </script>
                             </div>
                         </div>
-                    </div>
-                    <!-- Categories widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Categories</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Web Design</a></li>
-                                        <li><a href="#!">HTML</a></li>
-                                        <li><a href="#!">Freebies</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">JavaScript</a></li>
-                                        <li><a href="#!">CSS</a></li>
-                                        <li><a href="#!">Tutorials</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Side widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Side Widget</div>
-                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-                    </div>
+                    </section>
                 </div>
             </div>
         </div>

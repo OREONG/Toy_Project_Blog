@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+.join-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main {
+    width: 400px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid lightgrey;
+    border-radius: 50px;
+    margin-top: 9%;
+    background-color: #f6f6f6;
+}
+
+.logo {
+    margin-top: 0px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.id-box {
+    display: flex;
+    align-items: center;
+}
+
+#id {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+#duplCheck {
+    display: block;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    background-color: white;
+    width: 105px;
+}
+
+#duplCheck:hover {
+    background-color: #b4b4b4;
+    color: white;
+}
+
+.btn {
+    width: 30%;
+    background-color: #b4b4b4;
+    border-color: transparent;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+
+
+}
+.btn:hover {
+    background-color: #191c1f;
+    color: white;
+}
+
+.btn-box {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.account {
+    display: block;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    width: 100%;
+}
+
+#alert {
+    border-color: transparent;
+}
+
+.joinContainer {
+    width: 300px;
+}
+
+.failMsg {
+    color: #ff4f4f;
+    font-style: Italic;
+}
+.successMsg {
+    color: #2b73b6;
+    font-style: Italic;
+}
+
+.msg-box {
+    margin-top: -20px;
+}

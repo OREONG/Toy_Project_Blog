@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.comverse.blog.mapper.MemberMapper">
+
+    <select id="duplCheck" parameterType="com.comverse.blog.dto.Member" resultType="integer">
+        select  count(*)
+        from    member
+        where   member_id = #{member_id}
+    </select>
+
+    <insert id="insert" parameterType="com.comverse.blog.dto.Member">
+        insert into member values(#{member_id}, #{password}, #{name}, #{email}, sysdate(), 'N')
+    </insert>
+
+    <select id="selectId" parameterType="String" resultType="com.comverse.blog.dto.Member">
+        select  *
+        from    member
+        where   member_id = #{memberId}
+    </select>
+
+</mapper>

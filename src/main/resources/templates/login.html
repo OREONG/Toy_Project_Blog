@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <th:block th:if="${result > 0}">
+        <script type="text/javascript">
+            alert("로그인 되었습니다");
+            location.href="/";
+        </script>
+    </th:block>
+    <th:block th:if="${result == 0}">
+        <script type="text/javascript">
+            alert("비밀번호가 다릅니다");
+            history.back();
+        </script>
+    </th:block>
+    <th:block th:if="${result == -1}">
+        <script type="text/javascript">
+            alert("없는 아이디 입니다");
+            history.back();
+        </script>
+    </th:block>
+</body>
+</html>

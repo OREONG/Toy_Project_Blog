@@ -76,6 +76,44 @@
   }
 }
 
+.de-btn {
+  border: none;
+  background-color: aliceblue;
+  font-size: revert;
+}
+
+.re-btn {
+  border: none;
+  background-color: aliceblue;
+  font-size: revert;
+}
+
+.up-btn {
+  border: none;
+  background-color: aliceblue;
+  font-size: revert;
+}
+
+.re-reg-btn {
+  border: none;
+  background-color: aliceblue;
+  font-size: revert;
+}
+
+.reg-btn {
+  color: #ffffff;
+  background-color: #919191;
+  border: none;
+  border-radius: 5px;
+  font-size: large;
+}
+
+.reg-btn:hover {
+  color: #ffffff;
+  background-color: #595959;
+  border: none;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
@@ -4230,6 +4268,9 @@ textarea.form-control-lg {
   .navbar-expand-lg {
     flex-wrap: nowrap;
     justify-content: flex-start;
+    /*position: fixed;*/
+    width: 100%;
+    z-index: 20;
   }
   .navbar-expand-lg .navbar-nav {
     flex-direction: row;
@@ -11285,4 +11326,6 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+
+
 }
