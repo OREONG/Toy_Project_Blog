@@ -38,11 +38,6 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int re_reviewInsert(Board board) {
-        return bm.re_reviewInsert(board);
-    }
-
-    @Override
     public int postInsert(Board board) {
         return bm.postInsert(board);
     }

@@ -17,8 +17,6 @@ public interface BoardMapper {
 
     int reviewInsert(Board board);
 
-    int re_reviewInsert(Board board);
-
     int postInsert(Board board);
 
     int postDelete(int boardNo);

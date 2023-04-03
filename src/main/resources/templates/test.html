@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Fancy Website</title>
+  <style>
+    body {
+      background-color: #1f1f1f;
+      color: white;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 18px;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: #ff4c4c;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      margin: 0 0 1rem;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+    }
+
+    h3 {
+      font-size: 2rem;
+    }
+
+    p {
+      margin: 0 0 1.5rem;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      max-width: 800px;
+      padding: 1rem;
+    }
+
+    .card {
+      background-color: #2f2f2f;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      padding: 1rem;
+    }
+
+    .btn {
+      background-color: #ff4c4c;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 1rem;
+      padding: 0.8rem 1.5rem;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #ff3333;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Welcome to My Fancy Website!</h1>
+
+  <div class="card">
+    <h2>About Us</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod semper aliquet. Maecenas accumsan arcu in augue porttitor, at hendrerit turpis eleifend. Sed fringilla erat vel tincidunt malesuada.</p>
+    <a href="#" class="btn">Learn More</a>
+  </div>
+
+  <div class="card">
+    <h2>Our Services</h2>
+    <ul>
+      <li>Web Development</li>
+      <li>Mobile Development</li>
+      <li>UI/UX Design</li>
+      <li>SEO Optimization</li>
+    </ul>
+    <a href="#" class="btn">View All Services</a>
+  </div>
+
+  <div class="card">
+    <h2>Contact Us</h2>
+    <form action="#">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name"><br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email"><br>
+      <label for="message">Message:</label>
+      <textarea id="message" name="message"></textarea><br>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

@@ -74,7 +74,7 @@
                         </header>
                        <!-- Post content-->
                         <div class="card bg-light">
-                        <section class="mb-5" th:text="${board.board_content}"></section>
+                        <section class="mb-5" th:utext="${board.doc}"></section>
                         </div>
                         <div>
                             <div class="small text-muted">
@@ -132,9 +132,9 @@
                                     </div>
                                     <!--대댓글 등록-->
                                     <div class="writeForm" style="display: none">
-                                        <form class="mb-4" action="/re_reviewInsert">
+                                        <form class="mb-4" action="/reviewInsert">
                                             <textarea class="form-control" rows="1" placeholder="대댓글을 입력하세요" name="board_content"></textarea>
-                                            <input type="hidden" name="parent_review_no" th:value="${review.board_no}">
+                                            <input type="hidden" name="parent_board_no" th:value="${review.board_no}">
                                             <button type="submit" class="re-reg-btn">등록</button>
                                             <button type="button" class="re-btn" onclick="cancelWrite(event)">취소</button>
                                         </form>

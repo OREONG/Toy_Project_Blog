@@ -87,11 +87,6 @@
         values      (null, #{board_parent}, #{member_id}, null, #{board_content}, null, sysdate(), 'N')
     </insert>
 
-    <insert id="re_reviewInsert" parameterType="com.comverse.blog.dto.Board">
-        insert into board
-        values      (null, #{board_parent}, #{member_id}, null, #{board_content}, null, sysdate(), 'N')
-    </insert>
-
     <insert id="postInsert" parameterType="com.comverse.blog.dto.Board">
         insert into board
         values      (null, null, #{member_id}, #{board_title}, #{board_content}, 0, sysdate(), 'N')

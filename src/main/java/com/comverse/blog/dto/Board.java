@@ -1,6 +1,7 @@
 package com.comverse.blog.dto;
 
 import lombok.Data;
+import org.jsoup.nodes.Document;
 
 import java.util.Date;
 
@@ -29,4 +30,7 @@ public class Board {
 
     // 리뷰 갯수
     private int review_count;
+
+    // html출력용
+    private Document doc;
 }

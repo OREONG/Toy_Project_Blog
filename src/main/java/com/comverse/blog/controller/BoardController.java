@@ -4,6 +4,8 @@ import com.comverse.blog.dto.Board;
 import com.comverse.blog.service.BoardService;
 import com.comverse.blog.service.PagingBean;
 import jakarta.servlet.http.HttpSession;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,6 @@ public class BoardController {
         public String main(HttpSession session, Model model, Board board, String pageNum, String searchOpn, String keyword, String order) {
             String member_id = (String)session.getAttribute("member_id");
 
-            System.out.println(order);
             // 검색
             if (keyword != null) {
                 board.setSearchOpn(searchOpn);
@@ -58,7 +59,6 @@ public class BoardController {
 
             board.setOrder(order);
             List<Board> boardList = bs.boardList(board);
-            System.out.println(boardList);
 
             model.addAttribute("boardList", boardList);
             model.addAttribute("pb", pb);
@@ -74,10 +74,13 @@ public class BoardController {
             String member_id = (String)session.getAttribute("member_id");
 
             int result = bs.updateCount(board_no);
-            System.out.println(result);
             Board board = bs.selectPost(board_no);
+
+            // 불러온 board_content를 Document타입으로 형변환
+            Document doc = Jsoup.parse(board.getBoard_content());
+            board.setDoc(doc);
+
             List<Board> reviewList = bs.reviewList(board_no);
-            System.out.println(board);
 
             model.addAttribute("board", board);
             model.addAttribute("reviewList", reviewList);
@@ -113,19 +116,6 @@ public class BoardController {
             model.addAttribute("result", result);
             return "post";
         }
-
-    @RequestMapping("/re_reviewInsert")
-    public String re_reviewInsert(HttpSession session, Model model, Board board, int parent_review_no) {
-        String member_id = (String)session.getAttribute("member_id");
-        board.setMember_id(member_id);
-
-        board.setBoard_parent(parent_review_no);
-        int result = bs.re_reviewInsert(board);
-
-        model.addAttribute("member_id", member_id);
-        model.addAttribute("result", result);
-        return "post";
-    }
 
     @RequestMapping("/postDelete")
     public String postDelete(Model model, int board_no) {

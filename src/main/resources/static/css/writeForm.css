@@ -27,4 +27,11 @@
 .btn:hover {
     background-color: #191c1f;
     color: white;
-}h
+}
+
+div.editable {
+    width: 300px;
+    height: 200px;
+    border: 1px solid #dcdcdc;
+    overflow-y: auto;
+}
