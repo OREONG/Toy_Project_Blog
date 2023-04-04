@@ -65,6 +65,7 @@ public class BoardController {
             model.addAttribute("member_id", member_id);
             model.addAttribute("order", order);
             model.addAttribute("searchOpn", searchOpn);
+            model.addAttribute("keyword", keyword);
 
           return "main";
       }

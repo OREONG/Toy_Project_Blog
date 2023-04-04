@@ -17,7 +17,7 @@
     <div class="header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
+                <a class="navbar-brand" href="#!">OREONG 게시판</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -143,7 +143,7 @@
                                     <!--댓글 수정-->
                                     <div class="updateForm" style="display: none">
                                         <form class="mb-4" action="/reviewUpdate">
-                                            <textarea class="form-control" rows="1" th:placeholder="${review.board_content}" name="board_content"></textarea>
+                                            <textarea class="form-control" rows="1" th:text="${review.board_content}" name="board_content"></textarea>
                                             <input type="hidden" name="board_no" th:value="${review.board_no}">
                                             <input type="hidden" name="member_id" th:value="${review.member_id}">
                                             <button type="submit" class="re-reg-btn">수정</button>
@@ -168,7 +168,7 @@
                                             <!--대댓글 수정-->
                                             <div class="reUpdateForm" style="display: none">
                                                 <form class="mb-4" action="/reviewUpdate">
-                                                    <textarea class="form-control" rows="1" th:placeholder="${re_review.board_content}" name="board_content"></textarea>
+                                                    <textarea class="form-control" rows="1" th:text="${re_review.board_content}" name="board_content"></textarea>
                                                     <input type="hidden" name="board_no" th:value="${re_review.board_no}">
                                                     <input type="hidden" name="member_id" th:value="${re_review.member_id}">
                                                     <button type="submit" class="re-reg-btn">수정</button>

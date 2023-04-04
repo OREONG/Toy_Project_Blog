@@ -73,7 +73,7 @@
         <if test="searchOpn == 'content'">
             and board_content like CONCAT('%', #{keyword}, '%')
         </if>
-        <if test="searchOpn == 'title+content'">
+        <if test="searchOpn == 'titleContent'">
             and board_title like CONCAT('%', #{keyword}, '%')
             or board_content like CONCAT('%', #{keyword}, '%')
         </if>
